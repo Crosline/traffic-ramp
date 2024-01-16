@@ -14,7 +14,7 @@ namespace Game.Managers
 
         public bool IsInitialized => State != GameState.Initializing;
 
-        [SerializeField] private List<GameSystem> _gameSystems = new List<GameSystem>();
+        [SerializeField] private List<GameSystem> _gameSystems;
 
         private void Reset()
         {
@@ -25,6 +25,12 @@ namespace Game.Managers
             {
                 if (!_gameSystems.Contains(gameSystem)) _gameSystems.Add(gameSystem);
             }
+        }
+
+        private void OnDestroy()
+        {
+            foreach (var gameSystem in _gameSystems) gameSystem.Dispose();
+            _gameSystems.Clear();
         }
 
         void Start() {
@@ -77,12 +83,13 @@ namespace Game.Managers
     }
     
     
-    public enum GameState {
+    public enum GameState : byte {
         Initializing = 0,
         WaitingInput = 1,
         Running = 2,
         Win = 3,
         Lose = 4,
         Restart = 5,
+        Exit = 255,
     }
 }
