@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Game.Utilities;
 using UnityEngine;
 
 namespace Game.Managers

@@ -3,7 +3,7 @@ using Game.Utilities;
 
 namespace Game.Managers
 {
-    public class Manager : PersistentSingleton<Manager>
+    public class Manager : Singleton<Manager>
     {
         private List<SubManager> _gameSystems;
 
