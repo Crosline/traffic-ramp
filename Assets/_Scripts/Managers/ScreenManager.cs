@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.Systems;
 using UnityEngine;
 using Screen = Game.Screens.Screen;
 
 namespace Game.Managers
 {
-    public class ScreenManager : GameSystem
+    public class ScreenManager : SubManager
     {
         [SerializeField] private List<Screen> _screens;
         public static event Action<string> OnScreenOpened;

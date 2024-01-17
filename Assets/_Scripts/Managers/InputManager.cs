@@ -1,9 +1,8 @@
-﻿using Game.Systems;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Managers
 {
-    public class InputManager : GameSystem
+    public class InputManager : SubManager
     {
         public override void Initialize()
         {
