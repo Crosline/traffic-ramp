@@ -96,7 +96,6 @@ public class ToonShaderGUI : ShaderGUI
             materialEditor.RangeProperty(FindProperty("_ToonCutoffPoint", properties), "Toon cutoff");
             materialEditor.RangeProperty(FindProperty("_AdditionalLightCutoffPoint", properties), "Additional light cutoff");
             materialEditor.RangeProperty(FindProperty("_ShadowsFloor", properties), "Shadows floor value");
-            materialEditor.RangeProperty(FindProperty("_StrongRimStrength", properties), "Strong rim strength");
             EditorGUI.indentLevel--;
         }
     }

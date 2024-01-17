@@ -1,4 +1,5 @@
 ﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Game.Managers
@@ -15,6 +16,7 @@ namespace Game.Managers
             ChangeState(GameState.Initializing);
         }
 
+        [Button]
         public void ChangeState(GameState newState) {
             OnBeforeStateChanged?.Invoke(newState);
 
