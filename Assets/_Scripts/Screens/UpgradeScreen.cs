@@ -2,12 +2,14 @@
 {
     public class UpgradeScreen : Screen
     {
-        public override void OnOpen()
+        public override string Name => nameof(UpgradeScreen);
+
+        internal override void OnOpen()
         {
             throw new System.NotImplementedException();
         }
 
-        public override void OnClose()
+        internal override void OnClose()
         {
             throw new System.NotImplementedException();
         }

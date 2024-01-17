@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using Game.Utilities;
-using UnityEngine;
 
 namespace Game.Managers
 {
     public class Manager : PersistentSingleton<Manager>
     {
-        [SerializeField] private List<SubManager> _gameSystems;
+        private List<SubManager> _gameSystems;
 
         public T GetSubManager<T>() where T : SubManager
         {
@@ -20,10 +19,13 @@ namespace Game.Managers
         protected override void Awake()
         {
             base.Awake();
+
+            _gameSystems = new List<SubManager>();
             
-            foreach (var gameSystem in _gameSystems)
+            foreach (var gameSystem in GetComponentsInChildren<SubManager>())
             {
                 gameSystem.Initialize();
+                _gameSystems.Add(gameSystem);
             }
 
         }

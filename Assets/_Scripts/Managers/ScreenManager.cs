@@ -21,27 +21,38 @@ namespace Game.Managers
             _activeScreens.Clear();
         }
 
-        public void OpenScreen(string screenName)
+        public void OpenScreen<T>() where T : Screen
         {
             foreach (var screen in _screens)
             {
-                if (!screenName.Equals(screen.name)) continue;
+                if (screen.IsActive) continue;
+                if (screen is not T) continue;
 
                 screen.OnOpen();
-                OnScreenOpened?.Invoke(screenName);
+                screen.IsActive = true;
+                OnScreenOpened?.Invoke(screen.Name);
                 break;
             }
         }
         public void CloseActiveScreen()
         {
-            var activeScreen = _activeScreens.Pop();
+            var screen = _activeScreens.Pop();
+            screen.IsClosing = true;
             
-            activeScreen.OnClose();
-            OnScreenClosed?.Invoke(activeScreen.name);
+            screen.OnClose();
+            screen.IsActive = false;
+            OnScreenClosed?.Invoke(screen.Name);
+            screen.IsClosing = false;
         }
         public void CloseActiveScreenWithAnimation()
         {
+            var screen = _activeScreens.Pop();
+            screen.IsClosing = true;
             
+            screen.OnClose();
+            screen.IsActive = false;
+            OnScreenClosed?.Invoke(screen.Name);
+            screen.IsClosing = false;
         }
     }
 }
