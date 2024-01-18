@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.crosline.library": "https://github.com/Crosline/Library.git?path=/Assets/Crosline#0.1.17",
+    "com.crosline.library": "https://github.com/Crosline/Library.git?path=/Assets/Crosline#0.1.18",
     "com.unity.feature.development": "1.0.1",
     "com.unity.render-pipelines.universal": "14.0.9",
     "com.unity.textmeshpro": "3.0.6",

@@ -1,13 +1,13 @@
 {
   "dependencies": {
     "com.crosline.library": {
-      "version": "https://github.com/Crosline/Library.git?path=/Assets/Crosline#0.1.17",
+      "version": "https://github.com/Crosline/Library.git?path=/Assets/Crosline#0.1.18",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.render-pipelines.universal": "10.6.0"
       },
-      "hash": "e552362af5750f3ada7a6a3f631c1164e8dbe229"
+      "hash": "6a8603e298cea56d1872f9e4aad4c68e5ccb0bcc"
     },
     "com.unity.burst": {
       "version": "1.8.11",

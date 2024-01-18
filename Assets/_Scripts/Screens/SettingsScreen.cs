@@ -1,9 +1,8 @@
 ﻿namespace Game.Screens
 {
-    public class UpgradeScreen : Screen
+    public class SettingsScreen : Screen
     {
-        public override string Name => nameof(UpgradeScreen);
-
+        public override string Name => nameof(SettingsScreen);
         internal override void OnOpen()
         {
         }

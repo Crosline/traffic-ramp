@@ -29,16 +29,6 @@ namespace Game.Managers
             }
 
         }
-
-        protected virtual void Reset()
-        {
-            _gameSystems = new List<SubManager>();
-
-            foreach (var gameSystem in FindObjectsOfType<SubManager>())
-            {
-                if (!_gameSystems.Contains(gameSystem)) _gameSystems.Add(gameSystem);
-            }
-        }
         
         protected virtual void OnDestroy()
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.Screens;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace Game.Managers
         public bool IsInitialized => State != GameState.Initializing;
 
         void Start() {
-            ChangeState(GameState.Initializing);
+            ChangeState(GameState.WaitingInput);
         }
 
         [Button]
@@ -25,6 +26,7 @@ namespace Game.Managers
                 case GameState.Initializing:
                     break;
                 case GameState.WaitingInput:
+                    GetSubManager<ScreenManager>().OpenScreen<UpgradeScreen>();
                     break;
                 case GameState.Running:
                     break;
