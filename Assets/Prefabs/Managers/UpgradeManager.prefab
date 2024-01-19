@@ -46,30 +46,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _upgrades:
     Items:
-    - Key:
-        name: 2
+    - Key: Income
       Value:
-      - Multiplier: 1.2
-        Count: 5
-      - Multiplier: 1.5
-        Count: 3
-      - Multiplier: 1.8
-        Count: 2
-    - Key:
-        name: 3
+        _powersByLevel:
+        - 1
+        - 1.15
+        - 1.3
+        - 1.45
+        - 2
+        - 2.5
+        - 3
+        - 3.5
+        - 4
+        - 5
+    - Key: Fuel
       Value:
-      - Multiplier: 1.2
-        Count: 5
-      - Multiplier: 1.5
-        Count: 3
-      - Multiplier: 1.8
-        Count: 2
-    - Key:
-        name: 1
+        _powersByLevel:
+        - 1
+        - 1.15
+        - 1.3
+        - 1.45
+        - 2
+        - 2.5
+        - 3
+        - 3.5
+        - 4
+        - 5
+    - Key: Ramp
       Value:
-      - Multiplier: 1.2
-        Count: 5
-      - Multiplier: 1.5
-        Count: 3
-      - Multiplier: 1.8
-        Count: 2
+        _powersByLevel:
+        - 0
+        - 2
+        - 3
+        - 5
+        - 10
+        - 15
+        - 20
+        - 30
+        - 35
+        - 50
