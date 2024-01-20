@@ -55,7 +55,7 @@ MonoBehaviour:
     m_Bits: 64
   _roadParent: {fileID: 0}
   _roadPrefab: {fileID: 1322023625553184576, guid: 804d4eb55bf25c34bbc1e3490ecd60ee, type: 3}
-  _roadWidth: 5
+  _roadWidth: 9
   _roadLayer:
     serializedVersion: 2
     m_Bits: 128

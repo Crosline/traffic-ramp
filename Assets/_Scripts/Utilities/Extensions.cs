@@ -21,6 +21,28 @@ namespace Game.Utilities
         {
             return list[list.Count - 1 - index];
         }
+        
+        public static int LayerMaskToLayerIndex(LayerMask layerMask)
+        {
+            int layerIndex = 0;
+            int layer = layerMask.value;
+
+            // Find the index of the first bit that is set in the layer mask
+            while (layer > 0)
+            {
+                layer >>= 1;
+                layerIndex++;
+            }
+
+            // Convert the index to the actual layer number
+            return layerIndex - 1;
+        }
+
+        public static void SetLayersRecursively(this GameObject g, LayerMask layer)
+        {
+            var layerVal = LayerMaskToLayerIndex(layer);
+            SetLayersRecursively(g, layerVal);
+        }
 
         public static void SetLayersRecursively(this GameObject g, int layer)
         {

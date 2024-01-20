@@ -12,6 +12,8 @@ namespace Game.Managers
         public GameState State { get; private set; } = GameState.Initializing;
 
         public bool IsInitialized => State != GameState.Initializing;
+        
+        public uint GetCurrentCoins() => 10000;
 
         void Start() {
             ChangeState(GameState.WaitingInput);

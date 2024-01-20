@@ -20,8 +20,9 @@ namespace Game._Scripts.Controllers
         [SerializeField] private GameObject _roadPrefab;
         [SerializeField] private int _roadWidth;
         [SerializeField] private LayerMask _roadLayer;
-        private static int _roadLength = 100;
+        private static Vector2 _roadSize = new Vector2(3f, 100f);
         private ObjectPool<GameObject> _roadPool;
+        private int _roadPlacerAmount = 3;
 
         private Car GetRandomCarData() => _carData.Rand();
 
@@ -44,12 +45,22 @@ namespace Game._Scripts.Controllers
                 OnGetObject,
                 OnReleaseObject,
                 OnDestroyObject,
-                true, _roadWidth * 3 , _roadWidth * 3 * 2);
+                true, _roadWidth * _roadPlacerAmount , _roadWidth * _roadPlacerAmount * 2);
+
+            SpawnRoads();
         }
 
         private void SpawnRoads()
         {
-            
+            for (int j = -1; j < _roadPlacerAmount; j++)
+            {
+                for (int i = -_roadWidth/2; i < _roadWidth/2 + 1; i++)
+                {
+                        var spawnPoint = new Vector3(i * _roadSize.x, 0, j * _roadSize.y);
+                        var road = _roadPool.Get();
+                        road.transform.localPosition = spawnPoint;
+                }
+            }
         }
 
         public override void Dispose()
