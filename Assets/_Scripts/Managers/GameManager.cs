@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game.Managers
 {
-    public class GameManager : Manager
+    public class GameManager : Manager<GameManager>
     {
         public static event Action<GameState> OnBeforeStateChanged;
         public static event Action<GameState> OnAfterStateChanged;

@@ -8,7 +8,8 @@ namespace Game.Managers
     {
         [SerializeField]
         private SerializedDictionary<string, Upgrade> _upgrades;
-        
+        public Upgrade GetUpgrade(string upgrade) => _upgrades[upgrade];
+
         public override void Initialize()
         {
             foreach (var upgrade in _upgrades.Values)
@@ -22,13 +23,14 @@ namespace Game.Managers
             _upgrades.Clear();
         }
 
+
         public void Upgrade(string upgrade)
         {
             _upgrades[upgrade].IncreasePower();
         }
     }
 
-    public class Upgrades
+    public static class Upgrades
     {
         public const string Fuel = nameof(Fuel);
         public const string Income = nameof(Income);

@@ -10,10 +10,13 @@ namespace Game.Models
         protected virtual string Name { get; }
         [SerializeField]
         private List<float> _powersByLevel;
+        [SerializeField]
+        private List<float> _pricesByLevel;
 
         private int _multiplierIndex;
 
         public float Power { get; private set; }
+        public float Price { get; private set; }
         public bool IsMaxedOut => _multiplierIndex == _powersByLevel.Count - 1;
 
         public virtual void Initialize()
@@ -34,9 +37,8 @@ namespace Game.Models
         private void SettlePower()
         {
             Power = _powersByLevel[_multiplierIndex];
+            Price = _pricesByLevel[_multiplierIndex];
         }
-
-        ~Upgrade() => PlayerPrefs.SetInt($"Upgrade_{Name}_index", _multiplierIndex);
     }
 
     [Serializable]

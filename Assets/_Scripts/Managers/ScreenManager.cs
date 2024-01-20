@@ -33,7 +33,7 @@ namespace Game.Managers
 
         public override void Dispose()
         {
-            _activeScreens.Clear();
+            _activeScreens?.Clear();
         }
         
         private T GetScreen<T>() where T : Screen

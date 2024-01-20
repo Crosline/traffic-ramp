@@ -1,35 +1,36 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Threading;
 using Game.Utilities;
+using UnityEngine;
 
 namespace Game.Managers
 {
-    public class Manager : Singleton<Manager>
+    public class Manager<T> : Singleton<Manager<T>> where T : Manager<T>, new()
     {
-        private List<SubManager> _gameSystems;
+        [SerializeField] private List<SubManager> _gameSystems;
 
-        public T GetSubManager<T>() where T : SubManager
+        public T GetSubManager<T>()
         {
             foreach (var subManager in _gameSystems)
                 if (subManager is T castedSubManager)
                     return castedSubManager;
 
-            return null;
+            throw new ArgumentException();
         }
 
         protected override void Awake()
         {
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+
             base.Awake();
 
-            _gameSystems = new List<SubManager>();
-            
-            foreach (var gameSystem in GetComponentsInChildren<SubManager>())
-            {
+            foreach (var gameSystem in _gameSystems)
                 gameSystem.Initialize();
-                _gameSystems.Add(gameSystem);
-            }
-
         }
-        
+
         protected virtual void OnDestroy()
         {
             foreach (var gameSystem in _gameSystems) gameSystem.Dispose();
