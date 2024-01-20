@@ -24,11 +24,11 @@ namespace Game.Screens
 
         public override string Name => nameof(UpgradeScreen);
 
-        private UpgradeManager _upgradeManger;
+        private UpgradeManager _upgradeManager;
 
         internal override void OnOpen()
         {
-            _upgradeManger = (UpgradeManager)UpgradeManager.Instance;
+            _upgradeManager = ((GameManager)GameManager.Instance).GetSubManager<UpgradeManager>();
 
             _rampButton.onClick.AddListener(() => OnUpgradeButtonClicked(Upgrades.Ramp));
             _fuelButton.onClick.AddListener(() => OnUpgradeButtonClicked(Upgrades.Fuel));
@@ -46,28 +46,28 @@ namespace Game.Screens
 
         private void UpdateButtonData()
         {
-            var rampUpgrade = _upgradeManger.GetUpgrade(Upgrades.Ramp);
-            var fuelUpgrade = _upgradeManger.GetUpgrade(Upgrades.Fuel);
-            var incomeUpgrade = _upgradeManger.GetUpgrade(Upgrades.Income);
+            var rampUpgrade = _upgradeManager.GetUpgrade(Upgrades.Ramp);
+            var fuelUpgrade = _upgradeManager.GetUpgrade(Upgrades.Fuel);
+            var incomeUpgrade = _upgradeManager.GetUpgrade(Upgrades.Income);
 
             var coinAmount = ((GameManager)GameManager.Instance).GetCurrentCoins();
 
-            _rampButtonText.text = rampUpgrade.IsMaxedOut ? MaxText : $"{rampUpgrade.Power} m";
+            _rampButtonText.text = $"{rampUpgrade.Power} m";
             _rampPriceText.text = rampUpgrade.IsMaxedOut ? MaxText :
                 rampUpgrade.Price > coinAmount ? "" : $"{rampUpgrade.Price}";
 
-            _fuelButtonText.text = fuelUpgrade.IsMaxedOut ? MaxText : $"{fuelUpgrade.Power} L";
-            _fuelPriceText.text = fuelUpgrade.IsMaxedOut ? string.Empty :
+            _fuelButtonText.text = $"{fuelUpgrade.Power} L";
+            _fuelPriceText.text = fuelUpgrade.IsMaxedOut ? MaxText :
                 fuelUpgrade.Price > coinAmount ? "" : $"{fuelUpgrade.Price}";
 
-            _incomeButtonText.text = incomeUpgrade.IsMaxedOut ? MaxText : $"{incomeUpgrade.Power} x";
-            _incomePriceText.text = incomeUpgrade.IsMaxedOut ? string.Empty :
+            _incomeButtonText.text = $"{incomeUpgrade.Power} x";
+            _incomePriceText.text = incomeUpgrade.IsMaxedOut ? MaxText :
                 incomeUpgrade.Price > coinAmount ? "" : $"{incomeUpgrade.Price}";
         }
 
         private void OnUpgradeButtonClicked(string upgrade)
         {
-            _upgradeManger.Upgrade(upgrade);
+            _upgradeManager.Upgrade(upgrade);
             UpdateButtonData();
         }
     }

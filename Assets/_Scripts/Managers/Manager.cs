@@ -11,10 +11,10 @@ namespace Game.Managers
     {
         [SerializeField] private List<SubManager> _gameSystems;
 
-        public T GetSubManager<T>()
+        public TSubManager GetSubManager<TSubManager>()
         {
             foreach (var subManager in _gameSystems)
-                if (subManager is T castedSubManager)
+                if (subManager is TSubManager castedSubManager)
                     return castedSubManager;
 
             throw new ArgumentException();

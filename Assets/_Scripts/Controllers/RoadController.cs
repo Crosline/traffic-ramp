@@ -22,7 +22,7 @@ namespace Game._Scripts.Controllers
         [SerializeField] private LayerMask _roadLayer;
         private static Vector2 _roadSize = new Vector2(3f, 100f);
         private ObjectPool<GameObject> _roadPool;
-        private int _roadPlacerAmount = 3;
+        private int _roadLength = 3;
 
         private Car GetRandomCarData() => _carData.Rand();
 
@@ -45,16 +45,16 @@ namespace Game._Scripts.Controllers
                 OnGetObject,
                 OnReleaseObject,
                 OnDestroyObject,
-                true, _roadWidth * _roadPlacerAmount , _roadWidth * _roadPlacerAmount * 2);
+                true, _roadWidth * _roadLength , _roadWidth * _roadLength * 2);
 
             SpawnRoads();
         }
 
         private void SpawnRoads()
         {
-            for (int j = -1; j < _roadPlacerAmount; j++)
+            for (int j = -1; j < _roadLength; j++)
             {
-                for (int i = -_roadWidth/2; i < _roadWidth/2 + 1; i++)
+                for (int i = _roadWidth/2; i < _roadWidth/2 + 1; i++)
                 {
                         var spawnPoint = new Vector3(i * _roadSize.x, 0, j * _roadSize.y);
                         var road = _roadPool.Get();
