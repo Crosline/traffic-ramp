@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Game.Managers
@@ -6,11 +7,14 @@ namespace Game.Managers
     public class InputManager : SubManager, IPointerEnterHandler, IPointerExitHandler
     {
         /// <summary>
-        /// Both X and Y w
+        /// Both X and Y are between 0 and 1
         /// </summary>
         public Vector2 MousePosition { get; private set; }
 
         private bool _pointerDown;
+
+        public static event Action<Vector2> OnTouchEnter; 
+        public static event Action<Vector2> OnTouchExit; 
 
         public override void Initialize()
         {
@@ -27,10 +31,12 @@ namespace Game.Managers
         {
             if (!_pointerDown) return;
 
-            if (Input.touchCount == 0) return;
+            SetMousePos();
+        }
 
-            Debug.Log($"Position: {Input.touches[0].position}");
-            Debug.Log($"Raw Position: {Input.touches[0].rawPosition}");
+        private void SetMousePos()
+        {
+            if (Input.touchCount == 0) return;
 
             var pos = Input.touches[0].position;
             MousePosition = new Vector2(pos.x/Screen.width, pos.y/Screen.height);
@@ -38,12 +44,15 @@ namespace Game.Managers
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            SetMousePos();
             _pointerDown = true;
+            OnTouchEnter?.Invoke(MousePosition);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             _pointerDown = false;
+            OnTouchExit?.Invoke(MousePosition);
         }
     }
 }
