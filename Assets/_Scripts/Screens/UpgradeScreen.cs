@@ -35,6 +35,8 @@ namespace Game.Screens
             _incomeButton.onClick.AddListener(() => OnUpgradeButtonClicked(Upgrades.Income));
 
             UpdateButtonData();
+            InputManager.OnPointerEntered += OnPointerEntered;
+            InputManager.OnPointerExited += OnPointerExited;
         }
 
         internal override void OnClose()
@@ -42,6 +44,8 @@ namespace Game.Screens
             _rampButton.onClick.RemoveAllListeners();
             _fuelButton.onClick.RemoveAllListeners();
             _incomeButton.onClick.RemoveAllListeners();
+            InputManager.OnPointerEntered -= OnPointerEntered;
+            InputManager.OnPointerExited -= OnPointerExited;
         }
 
         private void UpdateButtonData()
@@ -69,6 +73,16 @@ namespace Game.Screens
         {
             _upgradeManager.Upgrade(upgrade);
             UpdateButtonData();
+        }
+
+        private void OnPointerExited(Vector2 obj)
+        {
+            _canvas.enabled = true;
+        }
+
+        private void OnPointerEntered(Vector2 obj)
+        {
+            _canvas.enabled = false;
         }
     }
 }

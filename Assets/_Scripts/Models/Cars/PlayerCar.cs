@@ -7,5 +7,7 @@ namespace Game.Models.Cars
     {
         [field: SerializeField]
         public float Smoothness { get; private set; }
+        [field: SerializeField]
+        public float AccelerationMultiplier { get; private set; }
     }
 }

@@ -67,6 +67,17 @@ namespace Game.Managers
             CloseScreenInternal(screen);
         }
 
+        public void CloseAll()
+        {
+            while (_activeScreens.Count > 0)
+            {
+                var screen = _activeScreens.Pop();
+                screen.IsClosing = true;
+
+                CloseScreenInternal(screen);
+            }
+        }
+
         public void CloseActiveScreen()
         {
             var screen = _activeScreens.Pop();
@@ -80,6 +91,7 @@ namespace Game.Managers
 
         private void OpenScreenInternal(Screen screen)
         {
+            _activeScreens.Push(screen);
             screen.gameObject.SetActive(true);
             screen.OnOpen();
             screen.IsClosing = false;
@@ -88,10 +100,10 @@ namespace Game.Managers
 
         private void CloseScreenInternal(Screen screen)
         {
-            screen.gameObject.SetActive(false);
             screen.OnClose();
             OnScreenClosed?.Invoke(screen.Name);
             screen.IsClosing = false;
+            screen.gameObject.SetActive(false);
         }
     }
 }

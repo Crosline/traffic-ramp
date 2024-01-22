@@ -6,6 +6,7 @@ using UnityEngine.Pool;
 
 namespace Game._Scripts.Controllers
 {
+    [RequireComponent(typeof(EnemySpawnController))]
     public class RoadController : SubManager
     {
         [Header("Car Settings")]
@@ -18,11 +19,11 @@ namespace Game._Scripts.Controllers
         [Header("Road Settings")]
         [SerializeField] private Transform _roadParent;
         [SerializeField] private GameObject _roadPrefab;
-        [SerializeField] private int _roadWidth;
+        [SerializeField] private int _roadWidth = 9;
+        [SerializeField] private int _roadLength = 5;
         [SerializeField] private LayerMask _roadLayer;
         private static Vector2 _roadSize = new Vector2(3f, 100f);
         private ObjectPool<GameObject> _roadPool;
-        private int _roadLength = 3;
 
         private Car GetRandomCarData() => _carData.Rand();
 
@@ -52,9 +53,10 @@ namespace Game._Scripts.Controllers
 
         private void SpawnRoads()
         {
-            for (int j = -1; j < _roadLength; j++)
+            var spawnIndexer = 0; // can be made to -1 too
+            for (int j = spawnIndexer; j < _roadLength; j++)
             {
-                for (int i = _roadWidth/2; i < _roadWidth/2 + 1; i++)
+                for (int i = -_roadWidth/2; i < _roadWidth/2 + 1; i++)
                 {
                         var spawnPoint = new Vector3(i * _roadSize.x, 0, j * _roadSize.y);
                         var road = _roadPool.Get();

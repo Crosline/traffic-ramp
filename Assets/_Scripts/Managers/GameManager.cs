@@ -26,15 +26,20 @@ namespace Game.Managers
             State = newState;
             switch (newState) {
                 case GameState.Initializing:
+                    GetSubManager<ScreenManager>().CloseAll();
                     break;
                 case GameState.WaitingInput:
                     GetSubManager<ScreenManager>().OpenScreen<UpgradeScreen>();
                     break;
                 case GameState.Running:
+                    GetSubManager<ScreenManager>().CloseAll();
+                    GetSubManager<ScreenManager>().OpenScreen<InGameScreen>();
                     break;
                 case GameState.Win:
+                    GetSubManager<ScreenManager>().OpenScreen<WinScreen>();
                     break;
                 case GameState.Lose:
+                    GetSubManager<ScreenManager>().OpenScreen<LoseScreen>();
                     break;
                 case GameState.Restart:
                     break;

@@ -16,3 +16,4 @@ MonoBehaviour:
   <Prefab>k__BackingField: {fileID: 170207347696753396, guid: 94e773130c79faf4489958d619e86860, type: 3}
   <BaseSpeed>k__BackingField: 50
   <Smoothness>k__BackingField: 5
+  <AccelerationMultiplier>k__BackingField: 1.5
