@@ -14,8 +14,10 @@ namespace Game.Managers
         public TSubManager GetSubManager<TSubManager>()
         {
             foreach (var subManager in _gameSystems)
+            {
                 if (subManager is TSubManager castedSubManager)
                     return castedSubManager;
+            }
 
             throw new ArgumentException();
         }

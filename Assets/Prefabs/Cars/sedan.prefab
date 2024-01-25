@@ -48,9 +48,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8569518100099689332, guid: 51ba040f4c7aa0a4481c7c8461c19533, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -6899449840304533443, guid: 51ba040f4c7aa0a4481c7c8461c19533, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4819223349682164798, guid: 51ba040f4c7aa0a4481c7c8461c19533, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -1328860500621903259, guid: 51ba040f4c7aa0a4481c7c8461c19533, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 51ba040f4c7aa0a4481c7c8461c19533, type: 3}
       propertyPath: m_Name
       value: sedan
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 51ba040f4c7aa0a4481c7c8461c19533, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 51ba040f4c7aa0a4481c7c8461c19533, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7626630938287245856, guid: 51ba040f4c7aa0a4481c7c8461c19533, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -72,7 +100,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7151584061000751953}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 168c6e1086610a74780d6000798cbbd7, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

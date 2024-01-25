@@ -1,4 +1,5 @@
 ﻿using System;
+using Cinemachine;
 using Game._Scripts.Controllers;
 using Game.Models.Cars;
 using UnityEngine;
@@ -11,6 +12,8 @@ namespace Game.Managers
         [SerializeField]
         private Transform _playerSpawnPoint;
 
+        [SerializeField] private CinemachineVirtualCamera _camera;
+
         [SerializeField] private CarController[] _playerCarPrefabs;
         private CarModel SelectedCarId;
         private CarController _spawnedCar;
@@ -20,6 +23,9 @@ namespace Game.Managers
             GameManager.OnAfterStateChanged += OnGameStateChanged;
 
             SelectedCarId = (CarModel)PlayerPrefs.GetInt("PlayerManager_SelectedCarId", 150);
+            _spawnedCar = Instantiate(GetSelectedCar(), _playerSpawnPoint.position, _playerSpawnPoint.rotation, null);
+
+            _camera.Follow = _spawnedCar.transform;
         }
 
         private CarController GetSelectedCar()
@@ -35,7 +41,6 @@ namespace Game.Managers
         {
             if (obj == GameState.WaitingInput)
             {
-                _spawnedCar = Instantiate(GetSelectedCar(), _playerSpawnPoint.position, _playerSpawnPoint.rotation, null);
                 _spawnedCar.IsEnabled = true;
             }
 

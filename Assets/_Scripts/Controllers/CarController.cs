@@ -1,4 +1,5 @@
 ﻿using System;
+using DG.Tweening;
 using Game.Managers;
 using Game.Models.Cars;
 using UnityEngine;
@@ -82,6 +83,9 @@ namespace Game._Scripts.Controllers
             if (zVector3.z > initialPosition.z)
             {
                 zVector3.z = initialPosition.z;
+            } else if (zVector3.z < initialPosition.z - 4)
+            {
+                zVector3.z = initialPosition.z - 4;
             }
 
             transform.position = zVector3;
@@ -89,9 +93,9 @@ namespace Game._Scripts.Controllers
 
         private void MoveCarForward()
         {
-
             var localSpeed = _inputManager.PointerDown ? speed * 1.2f : speed;
             transform.Translate(0f, 0f, localSpeed * Time.deltaTime);
+            // _rigidbody.velocity += transform.forward * (localSpeed * Time.deltaTime);
         }
 
         private void MoveCarHorizontal()
@@ -101,7 +105,14 @@ namespace Game._Scripts.Controllers
 
             var vector3 = GetMouseXToCarPosition();
 
+            var posBefore = transform.position.x;
             transform.position = Vector3.Lerp(transform.position, vector3, Time.deltaTime * smoothNess);
+
+            var deltaPos = transform.position.x - posBefore;
+
+            var rotation = initialRotation;
+            rotation.z -= deltaPos;
+            transform.rotation = rotation;
         }
 
         private Vector3 GetMouseXToCarPosition()
@@ -134,6 +145,16 @@ namespace Game._Scripts.Controllers
             if (other.gameObject.CompareTag("Road"))
             {
                 _isOnRoad = true;
+                // _rigidbody.isKinematic = true;
+                transform.rotation = initialRotation;
+            }
+        }
+
+        private void OnCollisionExit(Collision other)
+        {
+            if (other.gameObject.CompareTag("Ramp"))
+            {
+                transform.DORotate(initialRotation.eulerAngles, 1f);
             }
         }
     }
