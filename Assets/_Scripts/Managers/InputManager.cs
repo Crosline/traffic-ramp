@@ -17,21 +17,23 @@ namespace Game.Managers
         public static event Action<Vector2> OnPointerEntered;
         public static event Action<Vector2> OnPointerExited;
 
-        public bool PointerDown { get; private set; }
+        private bool _pointerDown;
+
+        public bool PointerDown => Input.touchCount > 0 && _pointerDown;
 
         private bool _pointerStatusLastFrame = false;
         public bool TouchUp => _pointerStatusLastFrame && !PointerDown;
 
         public override void Initialize()
         {
-            PointerDown = false;
+            _pointerDown = false;
             MousePosition = Vector2.zero;
             _mousePositionLastFrame = Vector2.zero;
         }
 
         public override void Dispose()
         {
-            PointerDown = false;
+            _pointerDown = false;
         }
 
         private void Update()
@@ -61,13 +63,13 @@ namespace Game.Managers
             SetMousePos();
             _mousePositionLastFrame = MousePosition;
             DeltaMove = Vector2.zero;
-            PointerDown = true;
+            _pointerDown = true;
             OnPointerEntered?.Invoke(MousePosition);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            PointerDown = false;
+            _pointerDown = false;
             OnPointerExited?.Invoke(MousePosition);
         }
 

@@ -44,13 +44,14 @@ namespace Game.Managers
                 _spawnedCar.IsEnabled = true;
             }
 
-            if (obj == GameState.Running)
-            {
-            }
-
             if (obj == GameState.Lose)
             {
                 _spawnedCar.IsEnabled = false;
+            }
+
+            if (obj == GameState.Restart)
+            {
+                _spawnedCar.Restart();
             }
         }
 

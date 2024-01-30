@@ -164,4 +164,5 @@ MonoBehaviour:
   speed: 15
   pullSpeed: 3000
   startForce: 10
+  initialFuel: 10
   _car: {fileID: 11400000, guid: 51727462900751b4da2cebdb17799a3b, type: 2}

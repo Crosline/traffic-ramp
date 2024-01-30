@@ -28,12 +28,22 @@ namespace Game.Managers
             Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
 
             base.Awake();
+            InitializeAllSubsystems();
+        }
 
+        protected virtual void OnDestroy()
+        {
+            DisposeAllSubsystems();
+            _gameSystems.Clear();
+        }
+
+        protected void InitializeAllSubsystems()
+        {
             foreach (var gameSystem in _gameSystems)
                 gameSystem.Initialize();
         }
 
-        protected virtual void OnDestroy()
+        protected void DisposeAllSubsystems()
         {
             foreach (var gameSystem in _gameSystems) gameSystem.Dispose();
             _gameSystems.Clear();

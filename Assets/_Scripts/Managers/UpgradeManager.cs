@@ -26,6 +26,11 @@ namespace Game.Managers
 
         public void Upgrade(string upgrade)
         {
+            var coinAmount = ((GameManager)GameManager.Instance).GetCurrentCoins();
+
+            if (_upgrades[upgrade].Price > coinAmount)
+                return;
+
             _upgrades[upgrade].IncreasePower();
         }
     }

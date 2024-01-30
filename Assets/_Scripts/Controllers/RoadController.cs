@@ -66,6 +66,20 @@ namespace Game._Scripts.Controllers
             GameManager.OnAfterStateChanged += OnGameStateChanged;
         }
 
+        private void SetRoadPositionsInitial()
+        {
+            // can be made to -1 too
+            var roadIndex = 0;
+            for (int j = _roadSpawnIndexer; j < _roadLength; j++)
+            {
+                for (int i = -_roadWidth / 2; i < _roadWidth / 2 + 1; i++)
+                {
+                    var spawnPoint = new Vector3(i * _roadSize.x, 0, j * _roadSize.y);
+                    _roads[roadIndex++].transform.localPosition = spawnPoint;
+                }
+            }
+        }
+
         private void SpawnRoads()
         {
             // can be made to -1 too
@@ -81,15 +95,30 @@ namespace Game._Scripts.Controllers
                 }
             }
 
-            GameManager.OnAfterStateChanged -= OnGameStateChanged;
         }
-        
-        
+
+        private void SetCarPositionsInitial()
+        {
+            for (int i = 0; i < _carCount; i++)
+            {
+                var spawnPoint = GetCarSpawnPoint(0);
+                _cars[i].transform.position = spawnPoint;
+            }
+        }
+
+
         private void OnGameStateChanged(GameState gameState)
         {
             if (gameState == GameState.Running)
             {
                 SpawnCarsInitial();
+                SetCarPositionsInitial();
+            }
+            if (gameState == GameState.Restart)
+            {
+                SpawnRoads();
+                SetCarPositionsInitial();
+                SetRoadPositionsInitial();
             }
         }
 
@@ -171,6 +200,8 @@ namespace Game._Scripts.Controllers
             _roadPool.Clear();
             _roadPool.Dispose();
             Destroy(_roadParent);
+
+            GameManager.OnAfterStateChanged -= OnGameStateChanged;
         }
 
         private GameObject OnCreateCar()

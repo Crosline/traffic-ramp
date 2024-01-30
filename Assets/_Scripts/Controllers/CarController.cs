@@ -15,6 +15,8 @@ namespace Game._Scripts.Controllers
         [SerializeField] private float speed = 3f;
         [SerializeField] private float pullSpeed = 3f;
         [SerializeField] private float startForce = 20f;
+        [SerializeField] private float initialFuel = 15f;
+        private float _fuel;
         public bool IsEnabled { get; set; }
         private bool _isShot;
         private bool _isOnRoad;
@@ -23,6 +25,8 @@ namespace Game._Scripts.Controllers
         private Vector3 initialPosition;
         private Quaternion initialRotation;
         private Rigidbody _rigidbody;
+
+        public int distanceTraveled { get; private set; }
 
         public CarModel Id => _car.Id;
 
@@ -34,6 +38,8 @@ namespace Game._Scripts.Controllers
             initialRotation = transformTemp.rotation;
             _isShot = false;
             _isOnRoad = false;
+            distanceTraveled = 0;
+            _fuel = initialFuel * ((GameManager)GameManager.Instance).GetSubManager<UpgradeManager>().GetUpgrade(Upgrades.Fuel).Power;
 
             _inputManager = ((GameManager)GameManager.Instance).GetSubManager<InputManager>();
             // InputManager.OnTouchExit += OnPointerRelease;
@@ -46,6 +52,15 @@ namespace Game._Scripts.Controllers
             // InputManager.OnTouchDeltaMove -= OnPointerMove;
         }
 
+        internal void Restart()
+        {
+            transform.position = initialPosition;
+            transform.rotation = initialRotation;
+            _isShot = false;
+            _isOnRoad = false;
+            distanceTraveled = 0;
+            _fuel = initialFuel * ((GameManager)GameManager.Instance).GetSubManager<UpgradeManager>().GetUpgrade(Upgrades.Fuel).Power;
+        }
 
         private void Update()
         {
@@ -55,14 +70,43 @@ namespace Game._Scripts.Controllers
             if (_isShot) 
                 MoveCarHorizontal();
 
-            if (_isOnRoad) 
+            if (_isOnRoad)
+            {
                 MoveCarForward();
+                CalculateDistance();
+                CheckFuel();
+            }
 
             if (_inputManager.TouchUp && !_isShot && !_isOnRoad) 
                 OnPointerRelease();
             
             if (!_isShot && !_isOnRoad)
                 MoveCarToPull(_inputManager.DeltaMove);
+        }
+
+        private void CheckFuel()
+        {
+            if (_fuel < 0)
+            {
+                _fuel = 0;
+                FuelEmpty();
+                return;
+            }
+
+            _fuel -= Time.deltaTime;
+        }
+
+        private void CalculateDistance()
+        {
+            if (transform.position.z <= initialPosition.z)
+                return;
+
+            var s = (int)(transform.position.z - initialPosition.z);
+
+            if (s <= distanceTraveled)
+                return;
+
+            distanceTraveled = s;
         }
 
         private void MoveCarToPull(Vector2 deltaMove)
@@ -142,20 +186,49 @@ namespace Game._Scripts.Controllers
 
         private void OnCollisionEnter(Collision other)
         {
-            if (other.gameObject.CompareTag("Road"))
+            if (!IsEnabled) return;
+
+            if (other.gameObject.CompareTag("Road") && !_isOnRoad)
             {
                 _isOnRoad = true;
                 // _rigidbody.isKinematic = true;
                 transform.rotation = initialRotation;
+                _rigidbody.velocity = Vector3.zero;
+
+                var pos = transform.position;
+                pos.y = 0;
+                transform.position = pos;
+            } else if (other.gameObject.CompareTag("Enemy"))
+            {
+                IsEnabled = false;
+                transform.DORotate(UnityEngine.Random.insideUnitSphere, 0.5f);
+                transform.DOMove(Vector3.up + UnityEngine.Random.insideUnitSphere, 0.5f);
+
+                ((GameManager)GameManager.Instance).ChangeState(GameState.Lose);
             }
         }
 
         private void OnCollisionExit(Collision other)
         {
+            if (!IsEnabled) return;
+
             if (other.gameObject.CompareTag("Ramp"))
             {
                 transform.DORotate(initialRotation.eulerAngles, 1f);
+
+                var vel = _rigidbody.velocity;
+                vel.z = 0;
+                _rigidbody.velocity = vel;
             }
+        }
+
+        private void FuelEmpty()
+        {
+            IsEnabled = false;
+            transform.DOMove(transform.position + Vector3.forward, 0.5f);
+
+            ((GameManager)GameManager.Instance).ChangeState(GameState.Lose);
+
         }
     }
 }

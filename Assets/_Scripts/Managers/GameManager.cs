@@ -1,5 +1,6 @@
 ﻿using System;
 using Game.Screens;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace Game.Managers
 
         public bool IsInitialized => State != GameState.Initializing;
         
-        public uint GetCurrentCoins() => 10000;
+        public uint GetCurrentCoins() => (uint)PlayerPrefs.GetInt("Player_Coins", 0);
 
         void Start() {
             ChangeState(GameState.WaitingInput);
@@ -21,6 +22,7 @@ namespace Game.Managers
 
         [Button]
         public void ChangeState(GameState newState) {
+            if (newState == State) return; // skipping, no need to change state
             OnBeforeStateChanged?.Invoke(newState);
 
             State = newState;
@@ -35,13 +37,13 @@ namespace Game.Managers
                     GetSubManager<ScreenManager>().CloseAll();
                     GetSubManager<ScreenManager>().OpenScreen<InGameScreen>();
                     break;
-                case GameState.Win:
-                    GetSubManager<ScreenManager>().OpenScreen<WinScreen>();
-                    break;
                 case GameState.Lose:
+                    GetSubManager<ScreenManager>().CloseAll();
                     GetSubManager<ScreenManager>().OpenScreen<LoseScreen>();
                     break;
                 case GameState.Restart:
+                    GetSubManager<ScreenManager>().CloseAll();
+                    DOVirtual.DelayedCall(Time.fixedDeltaTime, () => ChangeState(GameState.WaitingInput));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
@@ -51,6 +53,11 @@ namespace Game.Managers
 
             Debug.Log($"New State: {newState}");
         }
+
+        internal void AddCurrency(int income)
+        {
+            PlayerPrefs.SetInt("Player_Coins", (int)(GetCurrentCoins() + income));
+        }
     }
     
     
@@ -58,7 +65,6 @@ namespace Game.Managers
         Initializing = 0,
         WaitingInput = 1,
         Running = 2,
-        Win = 3,
         Lose = 4,
         Restart = 5,
         Exit = 255,
