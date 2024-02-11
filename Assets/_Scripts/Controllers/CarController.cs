@@ -222,6 +222,21 @@ namespace Game._Scripts.Controllers
             }
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("Enemy") && this.transform.position.z > other.transform.position.z + 0.1f)
+            {
+                var dir = (other.transform.position - this.transform.position).normalized;
+                other.gameObject.tag = "Default";
+                other.transform.DOMove(other.transform.position + dir * 4f, 1f);
+                other.transform.DOLocalRotate(new Vector3(0, other.transform.rotation.y - 60, 0), 1f);
+                DOVirtual.DelayedCall(2f, () =>
+                {
+                    other.gameObject.tag = "Enemy";
+                });
+            }
+        }
+
         private void FuelEmpty()
         {
             IsEnabled = false;

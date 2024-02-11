@@ -26,10 +26,10 @@ namespace Game._Scripts.Controllers
         private Transform _roadParent;
 
         [SerializeField] private GameObject _roadPrefab;
-        [SerializeField] private int _roadWidth = 9;
+        private int _roadWidth = 1;
         [SerializeField] private int _roadLength = 5;
         [SerializeField] private LayerMask _roadLayer;
-        private static Vector2 _roadSize = new Vector2(3f, 100f);
+        [SerializeField] private Vector2 _roadSize = new Vector2(25f, 102f);
         private ObjectPool<GameObject> _roadPool;
         private Transform[] _roads;
 
@@ -147,7 +147,7 @@ namespace Game._Scripts.Controllers
 
                 spawnPoint = new Vector3(randX * _roadSize.x, 0, randY * _roadSize.y);
 
-                var overlappedCarsLength = Physics.OverlapBoxNonAlloc(spawnPoint, Vector3.one, _carCollideBuffer,
+                var overlappedCarsLength = Physics.OverlapBoxNonAlloc(spawnPoint, Vector3.one * 1.5f, _carCollideBuffer,
                     Quaternion.identity, _carLayer);
                 if (overlappedCarsLength == 0)
                     break;
@@ -175,6 +175,7 @@ namespace Game._Scripts.Controllers
                 {
                     car.roadIncrement++;
                     car.transform.position = GetCarSpawnPoint(car.roadIncrement);
+                    car.transform.rotation = Quaternion.identity;
                 }
             }
 
