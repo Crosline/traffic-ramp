@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using Game.Managers;
 using Game.Models.Cars;
 using Game.Utilities;
@@ -171,9 +172,10 @@ namespace Game._Scripts.Controllers
 
                 car.transform.position += vec3Forward * (car.speed * deltaTime);
 
-                if (car.transform.position.z < _player.position.z - 5)
+                if (car.transform.position.z < _player.position.z - 15)
                 {
                     car.roadIncrement++;
+                    car.transform.DOKill();
                     car.transform.position = GetCarSpawnPoint(car.roadIncrement);
                     car.transform.rotation = Quaternion.identity;
                 }
