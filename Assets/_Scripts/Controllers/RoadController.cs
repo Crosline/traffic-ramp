@@ -185,6 +185,7 @@ namespace Game._Scripts.Controllers
             {
                 if (r.position.z < _player.position.z - _roadSize.y - 10)
                 {
+                    Debug.Log($"Moving road {r.gameObject.name} to new position");
                     var tempPos = r.position;
                     tempPos.z += (_roadLength - _roadSpawnIndexer) * _roadSize.y;
 
