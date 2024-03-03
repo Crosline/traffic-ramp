@@ -202,7 +202,9 @@ namespace Game._Scripts.Controllers
             {
                 IsEnabled = false;
                 transform.DORotate(UnityEngine.Random.insideUnitSphere, 0.5f);
-                transform.DOMove(Vector3.up + UnityEngine.Random.insideUnitSphere, 0.5f);
+                transform.DOMove(transform.position + Vector3.up + UnityEngine.Random.insideUnitSphere, 0.5f);
+                
+                VFXController.Instance.SpawnVFX(transform.position, GenericVFXType.Smoke);
 
                 ((GameManager)GameManager.Instance).ChangeState(GameState.Lose);
             }
@@ -224,12 +226,16 @@ namespace Game._Scripts.Controllers
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.CompareTag("Enemy") && this.transform.position.z > other.transform.position.z + 0.1f)
+            var position = transform.position;
+            var otherPosition = other.transform.position;
+            if (other.gameObject.CompareTag("Enemy") && position.z > otherPosition.z + 0.1f)
             {
-                var dir = (other.transform.position - this.transform.position).normalized;
+                var dir = (otherPosition - position).normalized;
                 other.gameObject.tag = "Default";
-                other.transform.DOMove(other.transform.position + dir * 4f, 1f);
+                other.transform.DOMove(otherPosition + dir * 4f, 1f);
                 other.transform.DOLocalRotate(new Vector3(0, other.transform.rotation.y - 60, 0), 1f);
+                var contactPoint = other.ClosestPoint(position);
+                VFXController.Instance.SpawnVFX(contactPoint, GenericVFXType.Gear);
                 DOVirtual.DelayedCall(2f, () =>
                 {
                     other.gameObject.tag = "Enemy";

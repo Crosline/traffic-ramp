@@ -2842,6 +2842,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 114226492}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1463470537
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1463470539}
+  - component: {fileID: 1463470538}
+  m_Layer: 0
+  m_Name: VFXController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1463470538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463470537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43d9effe6668e9c47b3204cf27eff7fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gearVFXPrefab: {fileID: 3797772790831789056, guid: b93185e7430f5854fbe3637550a3b704, type: 3}
+  _smokeVFXPrefab: {fileID: 3064931314919131147, guid: adfc90e02d53c0c4c97516d7b4143429, type: 3}
+--- !u!4 &1463470539
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463470537}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1469548264
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4289,6 +4335,7 @@ SceneRoots:
   - {fileID: 1958474266}
   - {fileID: 721771697}
   - {fileID: 2035510442}
+  - {fileID: 1463470539}
   - {fileID: 7650591827639633641}
   - {fileID: 1228352957}
   - {fileID: 351811306}
